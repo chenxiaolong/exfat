@@ -42,7 +42,7 @@
 	#error FUSE 2.6 or later is required
 #endif
 
-const char* default_options = "ro_fallback,allow_other,blkdev,big_writes,"
+const char* default_options = "allow_other,blkdev,big_writes,"
 		"default_permissions";
 
 struct exfat ef;

@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 
 	if (argv[2])
 	{
-		if (exfat_mount(&ef, argv[1], "") != 0)
+		if (exfat_mount(&ef, argv[1], "rwo") != 0)
 			return 1;
 		rc = (exfat_set_label(&ef, argv[2]) != 0);
 	}

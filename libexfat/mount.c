@@ -177,10 +177,10 @@ int exfat_mount(struct exfat* ef, const char* spec, const char* options)
 
 	if (match_option(options, "ro"))
 		mode = EXFAT_MODE_RO;
-	else if (match_option(options, "ro_fallback"))
-		mode = EXFAT_MODE_ANY;
-	else
+	else if (match_option(options, "rwo"))
 		mode = EXFAT_MODE_RW;
+	else
+		mode = EXFAT_MODE_ANY;
 	ef->dev = exfat_open(spec, mode);
 	if (ef->dev == NULL)
 		return -EIO;
