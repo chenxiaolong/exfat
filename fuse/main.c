@@ -42,8 +42,13 @@
 	#error FUSE 2.6 or later is required
 #endif
 
-const char* default_options = "allow_other,blkdev,big_writes,"
-		"default_permissions";
+const char* default_options = "default_permissions"
+		",allow_other"
+#if !defined(__APPLE__)
+		",blkdev"
+		",big_writes"
+#endif
+		;
 
 struct exfat ef;
 
@@ -432,6 +437,7 @@ static char* add_ro_option(char* options, bool ro)
 	return ro ? add_option(options, "ro", NULL) : options;
 }
 
+#if !defined(__APPLE__)
 static char* add_user_option(char* options)
 {
 	struct passwd* pw;
@@ -460,6 +466,7 @@ static char* add_blksize_option(char* options, long cluster_size)
 	snprintf(blksize, sizeof(blksize), "%ld", MIN(page_size, cluster_size));
 	return add_option(options, "blksize", blksize);
 }
+#endif
 
 static char* add_fuse_options(char* options, const char* spec, bool ro)
 {
@@ -469,13 +476,14 @@ static char* add_fuse_options(char* options, const char* spec, bool ro)
 	options = add_ro_option(options, ro);
 	if (options == NULL)
 		return NULL;
+#if !defined(__APPLE__)
 	options = add_user_option(options);
 	if (options == NULL)
 		return NULL;
 	options = add_blksize_option(options, CLUSTER_SIZE(*ef.sb));
 	if (options == NULL)
 		return NULL;
-
+#endif
 	return options;
 }
 
