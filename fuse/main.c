@@ -44,8 +44,10 @@
 
 const char* default_options = "default_permissions"
 		",allow_other"
-#if !defined(__APPLE__)
+#if !defined(__APPLE__) && !defined(__FreeBSD__)
 		",blkdev"
+#endif
+#if !defined(__APPLE__)
 		",big_writes"
 #endif
 		;
@@ -454,7 +456,9 @@ static char* add_user_option(char* options)
 	}
 	return add_option(options, "user", pw->pw_name);
 }
+#endif
 
+#if !defined(__APPLE__) && !defined(__FreeBSD__)
 static char* add_blksize_option(char* options, long cluster_size)
 {
 	long page_size = sysconf(_SC_PAGESIZE);
@@ -480,6 +484,8 @@ static char* add_fuse_options(char* options, const char* spec, bool ro)
 	options = add_user_option(options);
 	if (options == NULL)
 		return NULL;
+#endif
+#if !defined(__APPLE__) && !defined(__FreeBSD__)
 	options = add_blksize_option(options, CLUSTER_SIZE(*ef.sb));
 	if (options == NULL)
 		return NULL;
