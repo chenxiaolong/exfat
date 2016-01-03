@@ -147,7 +147,7 @@ static void usage(const char* prog)
 	exit(1);
 }
 
-int main(int argc, char* argv[])
+int fsck_main(int argc, char* argv[])
 {
 	int opt;
 	const char* options;

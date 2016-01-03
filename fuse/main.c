@@ -512,7 +512,7 @@ static int fuse_exfat_main(char* mount_options, char* mount_point)
 			&fuse_exfat_ops, NULL);
 }
 
-int main(int argc, char* argv[])
+int mount_main(int argc, char* argv[])
 {
 	const char* spec = NULL;
 	char* mount_point = NULL;
