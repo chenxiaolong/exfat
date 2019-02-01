@@ -10,7 +10,7 @@ struct tool {
     int (*func)(int, char **);
 };
 
-struct tool tools[] = {
+static struct tool tools[] = {
     { "fsck.exfat", fsck_main },
     { "mount.exfat", mount_main },
     { NULL, NULL }
